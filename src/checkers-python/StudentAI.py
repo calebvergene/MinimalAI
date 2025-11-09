@@ -24,37 +24,82 @@ class StudentAI():
         moves = self.board.get_all_possible_moves(self.color)
         print(moves)
 
-        # random method
-        index = randint(0,len(moves)-1)
-        inner_index =  randint(0,len(moves[index])-1)
-        move = moves[index][inner_index]
-        self.board.make_move(move,self.color)
+        score, move = self.alpha_beta(4, True)
+        print(f'AI Selected: {move} with score of {score}')
+        self.board.make_move(move, self.color)
         return move
+
 
     
 
 
     # method to get heuristic value at each board state. eventually maybe factor in how close pieces are to becoming king
     def heuristic_value(self):
-        winner = board.is_win()
+        winner = self.board.is_win(self.color)
         if winner == self.color or winner == -1: # tie or win
             return 100000
         elif winner == self.opponent[self.color]:
             return -100000
         
         score = 0
-        
-        # Normal pieces
-        if color == 2:
-            score += board.white_count - board.black_count
+
+        # Normal pieces heuristic
+        if self.color == 2:
+            score += self.board.white_count - self.board.black_count
         else:
-            score += board.black_count - board.white_count
+            score += self.board.black_count - self.board.white_count
         
-        # TODO: Implement king_count in BoardClasses to use in this function.
+        # TODO: Implement king_count in BoardClasses to use in this function. worth 3x?
 
         return score
+    
+    
+    def alpha_beta(self, depth, my_turn):
+        # base case
+        if depth == 0 or self.board.is_win(self.color) != 0:
+            return self.heuristic_value(), None
+        
+        current_color = self.color if my_turn else self.opponent[self.color]
+        possible_moves = self.board.get_all_possible_moves(current_color)
+        
+        # no moves left
+        if len(possible_moves) == 0:
+            return self.heuristic_value(), None
 
+        # default best move is randomized so not just the same.
+        index = randint(0,len(possible_moves)-1)
+        inner_index =  randint(0,len(possible_moves[index])-1)
+        best_move = possible_moves[index][inner_index]
+        
 
+        if my_turn:
+            max_score = float('-inf')
+            
+            for checker in possible_moves:
+                for move in checker:
+
+                    self.board.make_move(move, current_color)
+                    score, _ = self.alpha_beta(depth - 1, False)
+                    self.board.undo()
+                    
+                    if score > max_score:
+                        max_score = score
+                        best_move = move
+            
+            return max_score, best_move
         
-        
-        
+        # opponent turn
+        else:
+            min_score = float('inf')
+            
+            for checker in possible_moves:
+                for move in checker:
+                    self.board.make_move(move, current_color)
+                    score, _ = self.alpha_beta(depth - 1, True)
+                    self.board.undo()
+                    
+                    if score < min_score:
+                        min_score = score
+                        best_move = move
+            
+            return min_score, best_move

@@ -35,7 +35,7 @@ class StudentAI():
 
     # method to get heuristic value at each board state. eventually maybe factor in how close pieces are to becoming king
     def heuristic_value(self):
-        winner = self.board.is_win(self.color)
+        winner = self.board.is_win(self.opponent[self.color])
         if winner == self.color or winner == -1: # tie or win
             return 100000
         elif winner == self.opponent[self.color]:
@@ -46,11 +46,11 @@ class StudentAI():
         # Normal pieces heuristic
         if self.color == 2:
             score += self.board.white_count - self.board.black_count
+            score += (self.board.king_white_count - self.board.king_black_count) * 3 # maybe adjust this number?
         else:
             score += self.board.black_count - self.board.white_count
+            score += (self.board.king_black_count - self.board.king_white_count) * 3
         
-        # TODO: Implement king_count in BoardClasses to use in this function. worth 3x?
-
         return score
     
     

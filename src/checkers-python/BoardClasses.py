@@ -53,6 +53,8 @@ class Board:
 
         self.black_count = 0
         self.white_count = 0
+        self.king_black_count = 0
+        self.king_white_count = 0
 
 
     def initialize_game(self):

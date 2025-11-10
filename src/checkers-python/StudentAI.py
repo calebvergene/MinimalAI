@@ -24,7 +24,7 @@ class StudentAI():
         moves = self.board.get_all_possible_moves(self.color)
         print(moves)
 
-        score, move = self.alpha_beta(4, True)
+        score, move = self.alpha_beta(5, True)
         print(f'AI Selected: {move} with score of {score}')
         self.board.make_move(move, self.color)
         return move
@@ -36,20 +36,53 @@ class StudentAI():
     # method to get heuristic value at each board state. eventually maybe factor in how close pieces are to becoming king
     def heuristic_value(self):
         winner = self.board.is_win(self.opponent[self.color])
-        if winner == self.color or winner == -1: # tie or win
-            return 100000
+        if winner == self.color: # tie or win. DO I WANT AI TO GO FOR TIE?
+            return float('inf')
         elif winner == self.opponent[self.color]:
-            return -100000
+            return float('-inf')
         
         score = 0
 
-        # Normal pieces heuristic
-        if self.color == 2:
-            score += self.board.white_count - self.board.black_count
-            score += (self.board.king_white_count - self.board.king_black_count) * 3 # maybe adjust this number?
-        else:
-            score += self.board.black_count - self.board.white_count
-            score += (self.board.king_black_count - self.board.king_white_count) * 3
+        if self.color == 2:  # white
+            my_pieces = self.board.white_count
+            my_kings = self.board.king_white_count
+            opponent_pieces = self.board.black_count
+            opponent_kings = self.board.king_black_count
+        else:  # black
+            my_pieces = self.board.black_count
+            my_kings = self.board.king_black_count
+            opponent_pieces = self.board.white_count
+            opponent_kings = self.board.king_white_count
+        
+        score += my_pieces * 10
+        score += my_kings * 15
+        score -= opponent_pieces * 10
+        score -= opponent_kings * 15
+        
+        for row in range(self.board.row):
+            for col in range(self.board.col):
+                checker = self.board.board[row][col]
+                checker_color = 1 if checker.color == 'B' else (2 if checker.color == 'W' else 0)
+                if checker_color == 0: continue
+
+                # rewards for more pieces having control over the center
+                # TODO: function for adding to score the closer you are to becoming king
+                center_col = self.board.col // 2
+                center_row = self.board.row // 2
+                if checker_color == self.color:
+                    score += (5 - abs(col - center_col))
+                    score += (5 - abs(row - center_row))
+                elif checker_color == self.opponent[self.color]:
+                    score -= (5 - abs(col - center_col))
+                    score -= (5 - abs(row - center_row))
+        
+        # more moves avaliable = better score for the user
+        my_moves = self.board.get_all_possible_moves(self.color)
+        opponent_moves = self.board.get_all_possible_moves(self.opponent[self.color])
+        my_move_count = sum(len(m) for m in my_moves)
+        opp_move_count = sum(len(m) for m in opponent_moves)
+        score += my_move_count * 5
+        score -= opp_move_count * 5
         
         return score
     

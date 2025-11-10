@@ -21,16 +21,31 @@ class StudentAI():
             self.board.make_move(move,self.opponent[self.color])
         else:
             self.color = 1
-        moves = self.board.get_all_possible_moves(self.color)
-        print(moves)
 
-        _, move = self.alpha_beta(6, True, float('-inf'), float('inf'))
+        _, move = self.alpha_beta(5, True, float('-inf'), float('inf'))
         self.board.make_move(move, self.color)
-        print(f'AI Selected: {move} with score of {self.heuristic_value()}')
         return move
 
 
-    
+    # function to get piece count from board, not allowed to edit board class
+    def count_pieces(self):
+        black_count = 0
+        white_count = 0
+        king_black_count = 0
+        king_white_count = 0
+        
+        for row in range(self.board.row):
+            for col in range(self.board.col):
+                checker = self.board.board[row][col]
+                if checker.color == 'B':
+                    black_count += 1
+                    if checker.is_king:
+                        king_black_count += 1
+                elif checker.color == 'W':
+                    white_count += 1
+                    if checker.is_king:
+                        king_white_count += 1
+        return black_count, white_count, king_black_count, king_white_count
 
     # method to get heuristic value at each board state. eventually maybe factor in how close pieces are to becoming king
     def heuristic_value(self):
@@ -42,16 +57,18 @@ class StudentAI():
         
         score = 0
 
+        black_count, white_count, king_black_count, king_white_count = self.count_pieces()
+        
         if self.color == 2:  # white
-            my_pieces = self.board.white_count
-            my_kings = self.board.king_white_count
-            opponent_pieces = self.board.black_count
-            opponent_kings = self.board.king_black_count
+            my_pieces = white_count
+            my_kings = king_white_count
+            opponent_pieces = black_count
+            opponent_kings = king_black_count
         else:  # black
-            my_pieces = self.board.black_count
-            my_kings = self.board.king_black_count
-            opponent_pieces = self.board.white_count
-            opponent_kings = self.board.king_white_count
+            my_pieces = black_count
+            my_kings = king_black_count
+            opponent_pieces = white_count
+            opponent_kings = king_white_count
         
         score += my_pieces * 10
         score += my_kings * 15

@@ -53,8 +53,6 @@ class Board:
 
         self.black_count = 0
         self.white_count = 0
-        self.king_black_count = 0
-        self.king_white_count = 0
 
 
     def initialize_game(self):
@@ -139,24 +137,17 @@ class Board:
                     capture_position = ((start[0] + (target[0]-start[0])//2), (start[1] + (target[1]-start[1])//2))
                     # calculate capture position
                     capture_positions.append(capture_position)
-                    captured_piece = self.board[capture_position[0]][capture_position[1]]
-                    captured_is_king = captured_piece.is_king
                     # record capture position
                     saved_enemy_position.append((capture_position[0],capture_position[1],self.board[capture_position[0]][capture_position[1]].color,self.board[capture_position[0]][capture_position[1]].is_king))
                     self.board[capture_position[0]][capture_position[1]] = Checker.Checker(".", [capture_position[0], capture_position[1]])
                     # capture
                     if turn == "B":
                         self.white_count -= 1
-                        if captured_is_king:
-                            self.king_white_count -= 1
                     else:
                         self.black_count -= 1
-                        if captured_is_king:
-                            self.king_black_count -= 1
                 if (turn == 'B' and target[0] == self.row - 1):# and not self.board[target[0]][target[1]].is_king):
                     if not is_start_checker_king:
                         temp_saved_move[2] = True
-                        self.king_black_count += 1
                     self.board[target[0]][target[1]].become_king()
                     #self.saved_move[2] = True
                     if not is_start_checker_king:
@@ -165,7 +156,6 @@ class Board:
                 elif (turn == 'W' and target[0] == 0):# and not self.board[target[0]][target[1]].is_king):
                     if not is_start_checker_king:
                         temp_saved_move[2] = True
-                        self.king_white_count += 1
                     self.board[target[0]][target[1]].become_king()
                      #self.saved_move[2] = True
                     if not is_start_checker_king:
@@ -416,18 +406,12 @@ class Board:
             raise Exception("Cannot undo operation")
         self.black_count = 0
         self.white_count = 0
-        self.king_black_count = 0
-        self.king_white_count = 0
         for i in range(self.row):
             for j in range(self.col):
                 if self.board[i][j].color=="W":
                     self.white_count += 1
-                    if self.board[i][j].is_king:
-                        self.king_white_count += 1
                 elif self.board[i][j].color == "B":
                     self.black_count += 1
-                    if self.board[i][j].is_king:
-                        self.king_black_count += 1
 
 
 

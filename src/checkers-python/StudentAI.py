@@ -21,7 +21,7 @@ class StudentAI():
             self.board.make_move(move,self.opponent[self.color])
         else:
             self.color = 1
-
+            
         _, move = self.alpha_beta(5, True, float('-inf'), float('inf'))
         self.board.make_move(move, self.color)
         return move

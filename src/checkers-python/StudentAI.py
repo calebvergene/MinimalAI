@@ -24,22 +24,21 @@ class StudentAI():
         moves = self.board.get_all_possible_moves(self.color)
         print(moves)
 
-        score, move = self.alpha_beta(5, True)
-        print(f'AI Selected: {move} with score of {score}')
+        _, move = self.alpha_beta(6, True, float('-inf'), float('inf'))
         self.board.make_move(move, self.color)
+        print(f'AI Selected: {move} with score of {self.heuristic_value()}')
         return move
 
 
     
 
-
     # method to get heuristic value at each board state. eventually maybe factor in how close pieces are to becoming king
     def heuristic_value(self):
         winner = self.board.is_win(self.opponent[self.color])
         if winner == self.color: # tie or win. DO I WANT AI TO GO FOR TIE?
-            return float('inf')
+            return 99999999
         elif winner == self.opponent[self.color]:
-            return float('-inf')
+            return -99999999
         
         score = 0
 
@@ -77,6 +76,7 @@ class StudentAI():
                     score -= (5 - abs(row - center_row))
         
         # more moves avaliable = better score for the user
+        # this also leads to your pieces being more to middle 
         my_moves = self.board.get_all_possible_moves(self.color)
         opponent_moves = self.board.get_all_possible_moves(self.opponent[self.color])
         my_move_count = sum(len(m) for m in my_moves)
@@ -86,8 +86,9 @@ class StudentAI():
         
         return score
     
+
     
-    def alpha_beta(self, depth, my_turn):
+    def alpha_beta(self, depth, my_turn, alpha, beta):
         # base case
         if depth == 0 or self.board.is_win(self.color) != 0:
             return self.heuristic_value(), None
@@ -112,12 +113,18 @@ class StudentAI():
                 for move in checker:
 
                     self.board.make_move(move, current_color)
-                    score, _ = self.alpha_beta(depth - 1, False)
+                    score, _ = self.alpha_beta(depth - 1, False, alpha, beta)
                     self.board.undo()
                     
                     if score > max_score:
                         max_score = score
                         best_move = move
+                    
+                    alpha = max(alpha, score)
+                    if beta <= alpha: # prune
+                        break
+                if beta <= alpha:
+                    break
             
             return max_score, best_move
         
@@ -128,11 +135,18 @@ class StudentAI():
             for checker in possible_moves:
                 for move in checker:
                     self.board.make_move(move, current_color)
-                    score, _ = self.alpha_beta(depth - 1, True)
+                    score, _ = self.alpha_beta(depth - 1, True, alpha, beta)
                     self.board.undo()
                     
                     if score < min_score:
                         min_score = score
                         best_move = move
+
+                    beta = min(beta, score)
+                    
+                    if beta <= alpha:
+                        break
+                if beta <= alpha:
+                    break
             
             return min_score, best_move

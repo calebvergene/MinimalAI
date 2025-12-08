@@ -23,12 +23,9 @@ class StudentAI():
         
         # change depth to stay under time
         piece_count = self.board.black_count + self.board.white_count
-        if piece_count <= 6:
-            depth = 9
-        elif piece_count <= 10:
-            depth = 7
-        else:
-            depth = 6
+        if piece_count <= 7:
+            depth = 3
+        else: depth = 7
             
         _, move = self.alpha_beta(depth, True, float('-inf'), float('inf'))
         self.board.make_move(move, self.color)
@@ -50,11 +47,21 @@ class StudentAI():
             opponent_pieces = self.board.white_count
         
         score = 0
-        score += (my_pieces - opponent_pieces) * 100
+        
+        # Dynamic piece value - increases as board empties
+        total_pieces = my_pieces + opponent_pieces
+        piece_value = 100 + (24 - total_pieces) * 15  # Increases from 100 to 460
+        
+        piece_diff = my_pieces - opponent_pieces
+        score += piece_diff * piece_value
+        
+        # Bonus for being ahead with fewer pieces (encourages trading when winning)
+        if piece_diff > 0:
+            scarcity_bonus = piece_diff * (24 - total_pieces) * 8
+            score += scarcity_bonus
         
         king_bonus = 0
         advancement_bonus = 0
-        vulnerability_penalty = 0
         
         for row in range(self.board.row):
             for col in range(self.board.col):
@@ -86,7 +93,6 @@ class StudentAI():
         
         return score
 
-    
     def alpha_beta(self, depth, my_turn, alpha, beta):
         # Base case
         if depth == 0 or self.board.is_win(self.color) != 0:

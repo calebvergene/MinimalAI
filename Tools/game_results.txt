@@ -1,0 +1,107 @@
+Game 1: 244s, player 1 wins
+Game 2: 149s, player 1 wins
+Game 3: 153s, Tie
+Game 4: 161s, Tie
+Game 5: 122s, player 1 wins
+Game 6: 138s, Tie
+Game 7: 394s, Tie
+Game 8: 236s, player 1 wins
+Game 9: 144s, player 1 wins
+Game 10: 45s, player 2 wins
+Game 11: 121s, player 1 wins
+Game 12: 58s, player 1 wins
+Game 13: 68s, player 1 wins
+Game 14: 80s, player 1 wins
+Game 15: 194s, Tie
+Game 16: 211s, Tie
+Game 17: 92s, player 1 wins
+Game 18: 1396s, player 1 wins
+Game 19: 93s, Tie
+Game 20: 445s, player 1 wins
+Game 21: 193s, player 1 wins
+Game 22: 570s, Tie
+Game 23: 81s, player 1 wins
+Game 24: 236s, Tie
+Game 25: 218s, player 1 wins
+Game 26: 160s, player 1 wins
+Game 27: 494s, Tie
+Game 28: 178s, player 1 wins
+Game 29: 150s, Tie
+Game 30: 160s, Tie
+Game 31: 83s, player 1 wins
+Game 32: 1271s, player 1 wins
+Game 33: 207s, Tie
+Game 34: 143s, Tie
+Game 35: 348s, player 1 wins
+Game 36: 635s, Tie
+Game 37: 77s, player 1 wins
+Game 38: 253s, Tie
+Game 39: 126s, player 1 wins
+Game 40: 275s, Tie
+Game 41: 194s, Tie
+Game 42: 87s, player 1 wins
+Game 43: 140s, player 2 wins
+Game 44: 264s, Tie
+Game 45: 81s, player 1 wins
+Game 46: 187s, player 1 wins
+Game 47: 166s, player 1 wins
+Game 48: 232s, player 1 wins
+Game 49: 434s, Tie
+Game 50: 220s, player 1 wins
+Game 51: 140s, player 1 wins
+Game 52: 63s, player 1 wins
+Game 53: 123s, player 1 wins
+Game 54: 82s, player 1 wins
+Game 55: 79s, player 1 wins
+Game 56: 137s, player 1 wins
+Game 57: 151s, player 1 wins
+Game 58: 416s, player 1 wins
+Game 59: 91s, player 1 wins
+Game 60: 482s, Tie
+Game 61: 192s, player 1 wins
+Game 62: 768s, Tie
+Game 63: 144s, player 1 wins
+Game 64: 136s, player 1 wins
+Game 65: 225s, player 1 wins
+Game 66: 199s, player 1 wins
+Game 67: 129s, Tie
+Game 68: 199s, Tie
+Game 69: 75s, player 1 wins
+Game 70: 89s, player 1 wins
+Game 71: 507s, player 1 wins
+Game 72: 240s, player 1 wins
+Game 73: 387s, Tie
+Game 74: 227s, Tie
+Game 75: 295s, player 1 wins
+Game 76: 187s, Tie
+Game 77: 190s, Tie
+Game 78: 188s, Tie
+Game 79: 107s, player 1 wins
+Game 80: 1244s, player 1 wins
+Game 81: 81s, player 1 wins
+Game 82: 114s, player 1 wins
+Game 83: 158s, Tie
+Game 84: 106s, Tie
+Game 85: 55s, player 2 wins
+Game 86: 81s, player 1 wins
+Game 87: 192s, player 2 wins
+Game 88: 156s, Tie
+Game 89: 110s, player 1 wins
+Game 90: 124s, player 1 wins
+Game 91: 136s, Tie
+Game 92: 76s, player 1 wins
+Game 93: 144s, Tie
+Game 94: 111s, player 1 wins
+Game 95: 106s, player 1 wins
+Game 96: 70s, player 1 wins
+Game 97: 78s, player 1 wins
+Game 98: 206s, Tie
+Game 99: 85s, player 1 wins
+Game 100: 316s, player 1 wins
+
+==================================================
+SUMMARY
+==================================================
+player 1 wins: 61 times (61.0%)
+Tie: 35 times (35.0%)
+player 2 wins: 4 times (4.0%)

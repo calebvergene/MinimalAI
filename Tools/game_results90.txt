@@ -1,9 +1,0 @@
-Game 1: 112s, Tie
-Game 2: 52s, player 1 wins
-Game 3: 178s, Tie
-Game 4: 93s, player 1 wins
-Game 5: 86s, player 1 wins
-Game 6: 417s, player 1 wins
-Game 7: 346s, player 1 wins
-Game 8: 229s, Tie
-Game 9: 86s, player 1 wins

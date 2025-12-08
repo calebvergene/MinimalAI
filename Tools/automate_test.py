@@ -27,7 +27,7 @@ def run_game():
 def main():
     results = []
     
-    with open("game_results90.txt", "w") as f:
+    with open("game_results.txt", "w") as f:
         for i in range(100):
             print(f"Running game {i+1}/100...")
             last_output, time_to_run = run_game()
